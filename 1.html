@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>연파란 채팅 앱</title>
+  <style>
+    :root {
+      --main-bg: #91cce7;        /*  주배경색 */
+      --sidebar-bg: #b3e0f7;     /* 사이드바 배경 */
+      --sidebar-hover: #a8d9f0;  /* 사이드바 hover */
+      --input-bg: #d9ecff;       /* 입력창 배경 */
+      --button-bg: #3399ff;      /* 버튼 배경 */
+      --button-hover: #2b85d3;   /* 버튼 hover */
+      --message-bg: #f0f8ff;     /* 메시지 배경 */
+      --text-color: #222;        /* 기본 글자색 */
+      --name-color: #3366cc;     /* 이름 색상 */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: var(--main-bg);
+      color: var(--text-color);
+    }
+
+    #sidebar {
+      width: 200px;
+      background-color: var(--sidebar-bg);
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: var(--name-color);
+    }
+
+    .school {
+      margin: 10px 0;
+      padding: 8px;
+      background-color: var(--message-bg);
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s;
+    }
+
+    .school:hover {
+      background-color: var(--sidebar-hover);
+    }
+
+    #chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--main-bg);
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background-color: var(--message-bg);
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .message span {
+      font-weight: bold;
+      color: var(--name-color);
+    }
+
+    #input-container {
+      display: flex;
+      padding: 10px;
+      background-color: var(--input-bg);
+      position: sticky;
+      bottom: 0;
+    }
+
+    #input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #aaccee;
+      border-radius: 5px;
+      font-size: 1em;
+      background-color: white;
+      color: var(--text-color);
+    }
+
+    #send {
+      margin-left: 10px;
+      padding: 10px 20px;
+      background-color: var(--button-bg);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    #send:hover {
+      background-color: var(--button-hover);
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h2>학교 목록</h2>
+    <div class="school">철산중</div>
+    <div class="school">광명중</div>
+    <div class="school">하안북중</div>
+  </div>
+
+  <div id="chat-area">
+    <div id="messages"></div>
+    <div id="input-container">
+      <input id="input" type="text" placeholder="메시지를 입력하세요..." />
+      <button id="send">전송</button>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('input');
+    const send = document.getElementById('send');
+    const messages = document.getElementById('messages');
+
+    send.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (text !== '') {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message');
+        msgDiv.innerHTML = `<span>나:</span> ${text}`;
+        messages.appendChild(msgDiv);
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        send.click();
+      }
+    });
+  </script>
+</body>
+</html>
